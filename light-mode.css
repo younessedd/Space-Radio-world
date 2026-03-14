@@ -1,0 +1,69 @@
+body.light-mode {
+    --space-black: #f8fafc;
+    --deep-space: #f1f5f9;
+    --deep-purple: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-muted: #64748b;
+}
+
+body.light-mode .hero,
+body.light-mode .radio-player,
+body.light-mode .weather,
+body.light-mode .radio-shows,
+body.light-mode .schedule,
+body.light-mode .featured-music,
+body.light-mode .about,
+body.light-mode .mobile-app,
+body.light-mode .contact,
+body.light-mode .maps,
+body.light-mode .reviews,
+body.light-mode .stats,
+body.light-mode .footer {
+    background: var(--space-black);
+}
+
+body.light-mode .station-card,
+body.light-mode .show-card,
+body.light-mode .music-card,
+body.light-mode .review-card,
+body.light-mode .stat-card,
+body.light-mode .forecast-card,
+body.light-mode .location-card,
+body.light-mode .info-item {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+body.light-mode .form-group input,
+body.light-mode .form-group textarea,
+body.light-mode .radio-search input,
+body.light-mode .city-search input {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-primary);
+}
+
+body.light-mode .title-main,
+body.light-mode .section-title,
+body.light-mode .hero-title .title-main {
+    background: linear-gradient(135deg, #0284c7, #7c3aed, #0284c7);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+body.light-mode .main-nav {
+    background: rgba(248, 250, 252, 0.9);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .nav-links a {
+    color: var(--text-primary);
+}
+
+body.light-mode .footer {
+    background: #e2e8f0;
+}
+
+body.light-mode .footer-bottom {
+    border-top-color: rgba(0, 0, 0, 0.1);
+}

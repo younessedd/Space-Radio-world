@@ -1,0 +1,44 @@
+body.dark-mode {
+    --space-black: #0a0a0f;
+    --deep-space: #12121a;
+    --deep-purple: #1a0a2e;
+    --text-primary: #f1f5f9;
+    --text-muted: #94a3b8;
+}
+
+body.dark-mode .hero,
+body.dark-mode .radio-player,
+body.dark-mode .weather,
+body.dark-mode .radio-shows,
+body.dark-mode .schedule,
+body.dark-mode .featured-music,
+body.dark-mode .about,
+body.dark-mode .mobile-app,
+body.dark-mode .contact,
+body.dark-mode .maps,
+body.dark-mode .reviews,
+body.dark-mode .stats,
+body.dark-mode .footer {
+    background: var(--space-black);
+}
+
+body.dark-mode .station-card,
+body.dark-mode .show-card,
+body.dark-mode .music-card,
+body.dark-mode .review-card,
+body.dark-mode .stat-card,
+body.dark-mode .forecast-card,
+body.dark-mode .location-card,
+body.dark-mode .info-item {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group textarea,
+body.dark-mode .radio-search input,
+body.dark-mode .city-search input {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
