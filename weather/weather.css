@@ -72,6 +72,95 @@
     gap: 0.5rem;
 }
 
+.city-search-wrapper {
+    position: relative;
+}
+
+.city-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--card-bg, rgba(26, 26, 46, 0.98));
+    border: 1px solid var(--card-border, rgba(56, 189, 248, 0.3));
+    border-radius: 12px;
+    margin-top: 0.5rem;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.city-suggestions.active {
+    display: block;
+}
+
+.city-suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid var(--card-border, rgba(255, 255, 255, 0.05));
+}
+
+.city-suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.city-suggestion-item:hover {
+    background: rgba(56, 189, 248, 0.15);
+}
+
+.city-suggestion-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(56, 189, 248, 0.2);
+    border-radius: 8px;
+    color: var(--neon-cyan);
+}
+
+.city-suggestion-info {
+    flex: 1;
+}
+
+.city-suggestion-name {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.city-suggestion-name mark {
+    background: rgba(56, 189, 248, 0.3);
+    color: var(--neon-cyan);
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+.city-suggestion-country {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 2px;
+}
+
+.city-suggestion-distance {
+    color: var(--nebula-green);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.city-suggestion-loading,
+.city-suggestion-empty {
+    padding: 1rem;
+    text-align: center;
+    color: var(--text-muted);
+}
+
 .city-search input {
     padding: 0.875rem 1.25rem;
     background: rgba(255, 255, 255, 0.05);

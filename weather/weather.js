@@ -3,17 +3,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const forecastGrid = document.getElementById('forecastGrid');
     const cityInput = document.getElementById('cityInput');
     const searchCityBtn = document.getElementById('searchCityBtn');
+    const locationBtn = document.getElementById('locationBtn');
     const unitBtns = document.querySelectorAll('.unit-btn');
     const weatherDate = document.getElementById('weatherDate');
+    const citySuggestions = document.getElementById('citySuggestions');
 
     const today = new Date();
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     weatherDate.textContent = today.toLocaleDateString('en-US', options);
 
     let currentUnit = 'metric';
-    let currentCity = 'London';
+    window.currentCity = 'London';
+    let userLat = null;
+    let userLon = null;
+    let debounceTimer = null;
+    let currentFetchController = null;
 
     const API_KEY = '4d8fb5b93d4af21d66a2948710284366';
+
+    // Popular cities for default suggestions
+    const popularCities = [
+        { name: 'London', country: 'GB', lat: 51.5074, lon: -0.1278 },
+        { name: 'New York', country: 'US', lat: 40.7128, lon: -74.0060 },
+        { name: 'Tokyo', country: 'JP', lat: 35.6762, lon: 139.6503 },
+        { name: 'Paris', country: 'FR', lat: 48.8566, lon: 2.3522 },
+        { name: 'Sydney', country: 'AU', lat: -33.8688, lon: 151.2093 },
+        { name: 'Dubai', country: 'AE', lat: 25.2048, lon: 55.2708 },
+        { name: 'Singapore', country: 'SG', lat: 1.3521, lon: 103.8198 },
+        { name: 'Los Angeles', country: 'US', lat: 34.0522, lon: -118.2437 },
+        { name: 'Berlin', country: 'DE', lat: 52.5200, lon: 13.4050 },
+        { name: 'Mumbai', country: 'IN', lat: 19.0760, lon: 72.8777 }
+    ];
 
     const weatherIcons = {
         '01d': '☀️', '01n': '🌙',
@@ -26,6 +46,170 @@ document.addEventListener('DOMContentLoaded', () => {
         '13d': '❄️', '13n': '❄️',
         '50d': '🌫️', '50n': '🌫️'
     };
+
+    // Calculate distance between two coordinates in km
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371;
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                  Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                  Math.sin(dLon/2) * Math.sin(dLon/2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return R * c;
+    }
+
+    // Get user location for geo-aware sorting
+    function getUserLocationCoords() {
+        return new Promise((resolve) => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        userLat = position.coords.latitude;
+                        userLon = position.coords.longitude;
+                        resolve({ lat: userLat, lon: userLon });
+                    },
+                    () => resolve(null)
+                );
+            } else {
+                resolve(null);
+            }
+        });
+    }
+
+    // Search cities using OpenWeatherMap API
+    async function searchCities(query) {
+        if (currentFetchController) {
+            currentFetchController.abort();
+        }
+        currentFetchController = new AbortController();
+
+        try {
+            const response = await fetch(
+                `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(query)}&limit=10&appid=${API_KEY}`,
+                { signal: currentFetchController.signal }
+            );
+            
+            if (!response.ok) return [];
+            
+            const data = await response.json();
+            return data.map(city => ({
+                name: city.name,
+                country: city.country,
+                lat: city.lat,
+                lon: city.lon,
+                state: city.state || ''
+            }));
+        } catch (error) {
+            if (error.name === 'AbortError') return [];
+            console.error('City search error:', error);
+            return [];
+        }
+    }
+
+    // Highlight matching text
+    function highlightMatch(text, query) {
+        if (!query) return text;
+        const regex = new RegExp(`(${query})`, 'gi');
+        return text.replace(regex, '<mark>$1</mark>');
+    }
+
+    // Render city suggestions
+    function renderCitySuggestions(cities, query) {
+        if (cities.length === 0) {
+            citySuggestions.innerHTML = '<div class="city-suggestion-empty">No cities found</div>';
+            citySuggestions.classList.add('active');
+            return;
+        }
+
+        // Sort by distance if user location is available
+        if (userLat !== null && userLon !== null) {
+            cities.sort((a, b) => {
+                const distA = calculateDistance(userLat, userLon, a.lat, a.lon);
+                const distB = calculateDistance(userLat, userLon, b.lat, b.lon);
+                return distA - distB;
+            });
+        }
+
+        citySuggestions.innerHTML = cities.map(city => {
+            const displayName = city.state ? `${city.name}, ${city.state}` : city.name;
+            const distance = (userLat !== null && userLon !== null) 
+                ? Math.round(calculateDistance(userLat, userLon, city.lat, city.lon))
+                : null;
+            
+            return `
+                <div class="city-suggestion-item" data-name="${city.name}" data-lat="${city.lat}" data-lon="${city.lon}">
+                    <div class="city-suggestion-icon">📍</div>
+                    <div class="city-suggestion-info">
+                        <div class="city-suggestion-name">${highlightMatch(displayName, query)}</div>
+                        <div class="city-suggestion-country">${city.country}</div>
+                    </div>
+                    ${distance !== null ? `<div class="city-suggestion-distance">${distance} km</div>` : ''}
+                </div>
+            `;
+        }).join('');
+
+        citySuggestions.classList.add('active');
+    }
+
+    // Handle city input change
+    function handleCityInput() {
+        const query = cityInput.value.trim();
+        
+        if (debounceTimer) clearTimeout(debounceTimer);
+        
+        if (query.length < 2) {
+            // Show popular cities when input is empty or too short
+            renderCitySuggestions(popularCities.map(c => ({
+                name: c.name,
+                country: c.country,
+                lat: c.lat,
+                lon: c.lon
+            })), '');
+            return;
+        }
+        
+        debounceTimer = setTimeout(async () => {
+            const cities = await searchCities(query);
+            renderCitySuggestions(cities, query);
+        }, 300);
+    }
+
+    // Select city from suggestions
+    function selectCity(name, lat, lon) {
+        cityInput.value = name;
+        citySuggestions.classList.remove('active');
+        loadWeatherByCoords(lat, lon);
+    }
+
+    // Event listeners for city search
+    cityInput.addEventListener('input', handleCityInput);
+    
+    cityInput.addEventListener('focus', () => {
+        const query = cityInput.value.trim();
+        if (query.length < 2) {
+            renderCitySuggestions(popularCities.map(c => ({
+                name: c.name,
+                country: c.country,
+                lat: c.lat,
+                lon: c.lon
+            })), '');
+        }
+    });
+
+    citySuggestions.addEventListener('click', (e) => {
+        const item = e.target.closest('.city-suggestion-item');
+        if (item) {
+            selectCity(item.dataset.name, parseFloat(item.dataset.lat), parseFloat(item.dataset.lon));
+        }
+    });
+
+    // Close suggestions when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.city-search-wrapper')) {
+            citySuggestions.classList.remove('active');
+        }
+    });
 
     async function getCityFromCoords(lat, lon) {
         try {
@@ -45,21 +229,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getUserLocation() {
-        return new Promise((resolve) => {
-            if ('geolocation' in navigator) {
-                navigator.geolocation.getCurrentPosition(
-                    async (position) => {
-                        const { latitude, longitude } = position.coords;
-                        const city = await getCityFromCoords(latitude, longitude);
-                        resolve(city || 'London');
-                    },
-                    () => {
-                        resolve('London');
-                    }
-                );
-            } else {
-                resolve('London');
+        return new Promise((resolve, reject) => {
+            if (!navigator.geolocation) {
+                reject(new Error('Geolocation not supported'));
+                return;
             }
+            
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const { latitude, longitude } = position.coords;
+                    const city = await getCityFromCoords(latitude, longitude);
+                    resolve(city || 'London');
+                },
+                (error) => {
+                    reject(error);
+                }
+            );
         });
     }
 
@@ -95,12 +280,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const description = data.weather[0].description;
         const icon = weatherIcons[data.weather[0].icon] || '🌤️';
         const cityName = data.name;
-        const country = data.country;
+        const country = data.sys.country;
 
         weatherContent.innerHTML = `
             <div class="current-weather">
                 <div class="weather-main">
-                    <div class="weather-icon" onclick="this.innerHTML='⏳'; loadWeather(currentCity)" title="Click to refresh">${icon}</div>
+                    <div class="weather-icon" onclick="this.innerHTML='⏳'; window.loadWeatherByCity(window.currentCity)" title="Click to refresh">${icon}</div>
                     <div class="temperature">${temp}<span>°</span></div>
                     <div class="weather-description">${description}</div>
                 </div>
@@ -173,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await fetchWeather(city);
             renderCurrentWeather(data.current);
             renderForecast(data.forecast);
-            currentCity = city;
+            window.currentCity = city;
         } catch (error) {
             weatherContent.innerHTML = `
                 <div class="weather-error">
@@ -184,6 +369,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Global function for onclick handlers
+    window.loadWeatherByCity = loadWeather;
+
+    // Search button click
     searchCityBtn.addEventListener('click', () => {
         const city = cityInput.value.trim();
         if (city) {
@@ -191,6 +380,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Location button click - get user location and load weather
+    locationBtn.addEventListener('click', async () => {
+        weatherContent.innerHTML = '<div class="loading-spinner"></div>';
+        
+        if (!navigator.geolocation) {
+            weatherContent.innerHTML = `
+                <div class="weather-error">
+                    <h3>⚠️ Location Not Supported</h3>
+                    <p>Your browser does not support geolocation.</p>
+                </div>
+            `;
+            return;
+        }
+        
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                const { latitude, longitude } = position.coords;
+                await loadWeatherByCoords(latitude, longitude);
+            },
+            (error) => {
+                weatherContent.innerHTML = `
+                    <div class="weather-error">
+                        <h3>⚠️ Location Error</h3>
+                        <p>Unable to get your location. Please enable location access.</p>
+                    </div>
+                `;
+            }
+        );
+    });
+
+    // Enter key to search
     cityInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             const city = cityInput.value.trim();
@@ -200,18 +420,59 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Unit toggle
     unitBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             unitBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             currentUnit = btn.dataset.unit;
-            loadWeather(currentCity);
+            loadWeather(window.currentCity);
         });
     });
 
-    loadWeather(currentCity);
+    // Load weather on page load - try location first
+    function initWeather() {
+        if (navigator.geolocation) {
+            weatherContent.innerHTML = '<div class="loading-spinner"></div>';
+            
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    loadWeatherByCoords(latitude, longitude);
+                },
+                () => {
+                    loadWeather('London');
+                }
+            );
+        } else {
+            loadWeather('London');
+        }
+    }
+    
+    // Load weather by coordinates directly using OpenWeatherMap
+    async function loadWeatherByCoords(lat, lon) {
+        weatherContent.innerHTML = '<div class="loading-spinner"></div>';
+        
+        const currentUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${currentUnit}&appid=${API_KEY}`;
+        const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${currentUnit}&appid=${API_KEY}`;
 
-    getUserLocation().then(city => {
-        loadWeather(city);
-    });
+        const currentResponse = await fetch(currentUrl);
+        const currentData = await currentResponse.json();
+        
+        if (currentData.cod == 200) {
+            const forecastResponse = await fetch(forecastUrl);
+            const forecastData = await forecastResponse.json();
+            renderCurrentWeather(currentData);
+            renderForecast(forecastData);
+            window.currentCity = currentData.name;
+        } else {
+            loadWeather('London');
+        }
+    }
+    
+    // Make functions available globally
+    window.initWeather = initWeather;
+    window.loadWeatherByCoords = loadWeatherByCoords;
+    
+    initWeather();
 });

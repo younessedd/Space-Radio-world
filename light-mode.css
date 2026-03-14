@@ -72,6 +72,73 @@ body.light-mode .city-search input:focus {
     outline: none;
 }
 
+body.light-mode .search-suggestions {
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+body.light-mode .suggestion-item {
+    border-bottom: 1px solid var(--card-border);
+}
+
+body.light-mode .suggestion-item:hover {
+    background: rgba(14, 165, 233, 0.1);
+}
+
+body.light-mode .suggestion-logo {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+body.light-mode .suggestion-name {
+    color: var(--text-primary);
+}
+
+body.light-mode .suggestion-name mark {
+    background: rgba(14, 165, 233, 0.3);
+    color: var(--accent-blue);
+}
+
+body.light-mode .city-suggestions {
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+body.light-mode .city-suggestion-item {
+    border-bottom: 1px solid var(--card-border);
+}
+
+body.light-mode .city-suggestion-item:hover {
+    background: rgba(14, 165, 233, 0.1);
+}
+
+body.light-mode .city-suggestion-icon {
+    background: rgba(14, 165, 233, 0.15);
+    color: var(--accent-blue);
+}
+
+body.light-mode .city-suggestion-name {
+    color: var(--text-primary);
+}
+
+body.light-mode .city-suggestion-name mark {
+    background: rgba(14, 165, 233, 0.3);
+    color: var(--accent-blue);
+}
+
+body.light-mode .city-suggestion-country {
+    color: var(--text-muted);
+}
+
+body.light-mode .city-suggestion-distance {
+    color: var(--accent-green);
+}
+
+body.light-mode .suggestion-location {
+    color: var(--text-muted);
+}
+
 body.light-mode .title-main,
 body.light-mode .section-title,
 body.light-mode .hero-title .title-main {
@@ -348,12 +415,26 @@ body.light-mode .app-feature p {
 }
 
 body.light-mode .app-store-btn {
-    background: var(--text-primary);
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .app-store-btn:hover {
+    background: linear-gradient(135deg, #334155, #475569);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+body.light-mode .app-store-btn .btn-icon {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.light-mode .app-store-btn .btn-text {
     color: white;
-    border: 2px solid var(--card-border);
-    border-radius: 12px;
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
+}
+
+body.light-mode .app-store-btn .btn-text small {
+    color: rgba(255, 255, 255, 0.8);
 }
 
 body.light-mode .phone-mockup {

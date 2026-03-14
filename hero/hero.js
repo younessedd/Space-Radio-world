@@ -1,68 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.getElementById('hero-stars');
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    
-    const stars = [];
-    const numStars = 200;
-    
-    class Star {
-        constructor() {
-            this.reset();
-        }
-        
-        reset() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 1.5 + 0.5;
-            this.opacity = Math.random() * 0.6 + 0.2;
-            this.twinkleSpeed = Math.random() * 0.03 + 0.01;
-            this.twinklePhase = Math.random() * Math.PI * 2;
-        }
-        
-        update() {
-            this.twinklePhase += this.twinkleSpeed;
-            this.opacity = 0.3 + Math.sin(this.twinklePhase) * 0.4;
-        }
-        
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-            ctx.fill();
-        }
-    }
-    
-    for (let i = 0; i < numStars; i++) {
-        stars.push(new Star());
-    }
-    
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        stars.forEach(star => {
-            star.update();
-            star.draw();
-        });
-        
-        requestAnimationFrame(animate);
-    }
-    
-    animate();
-    
-    const statNumbers = document.querySelectorAll('.stat-number');
+    const heroStatNumbers = document.querySelectorAll('.hero-stats .stat-number');
     
     function animateCounter(element) {
         const target = parseInt(element.dataset.count);
+        if (isNaN(target)) return;
+        
         const duration = 2000;
         const start = performance.now();
         
@@ -85,14 +27,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const statNumber = entry.target;
-                animateCounter(statNumber);
-                observer.unobserve(statNumber);
+                animateCounter(entry.target);
+                observer.unobserve(entry.target);
             }
         });
     }, { threshold: 0.5 });
     
-    statNumbers.forEach(stat => observer.observe(stat));
+    heroStatNumbers.forEach(stat => observer.observe(stat));
+    
+    function startLiveListenerSimulation() {
+        const listenersCount = document.getElementById('listeners-count');
+        if (!listenersCount) return;
+        
+        setInterval(() => {
+            const currentText = listenersCount.textContent;
+            const current = parseInt(currentText.replace(/[^0-9]/g, ''));
+            if (isNaN(current)) return;
+            
+            const change = Math.floor(Math.random() * 201) - 100;
+            const newCount = Math.max(45000, Math.min(55000, current + change));
+            listenersCount.textContent = newCount.toLocaleString();
+        }, 4000);
+    }
+    
+    setTimeout(startLiveListenerSimulation, 2500);
     
     const listenLiveBtn = document.getElementById('listenLiveBtn');
     const exploreBtn = document.getElementById('exploreBtn');

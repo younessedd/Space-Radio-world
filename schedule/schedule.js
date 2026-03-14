@@ -95,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="schedule-show">${item.show}</div>
                     <div class="schedule-dj">${djIcon} ${item.dj}</div>
                 </div>
-                <div class="schedule-emoji">${emojiIcons[item.emoji]}</div>
             </div>
         `).join('');
     }
