@@ -144,10 +144,6 @@
         flex-shrink: 0;
     }
     
-    .stations-grid {
-        grid-template-columns: 1fr;
-    }
-    
     .radio-player-bar {
         flex-wrap: wrap;
         padding: 0.75rem;
@@ -430,10 +426,6 @@
     
     .hero-title {
         font-size: 5rem;
-    }
-    
-    .stations-grid {
-        grid-template-columns: repeat(4, 1fr);
     }
 }
 

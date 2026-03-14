@@ -54,6 +54,36 @@
     background: rgba(255, 255, 255, 0.02);
 }
 
+.leaflet-container {
+    touch-action: pan-x pan-y;
+    cursor: grab;
+}
+
+.leaflet-container:active {
+    cursor: grabbing;
+}
+
+body.light-mode .maps {
+    background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+body.light-mode .map-container {
+    border: 2px solid #0f172a;
+}
+
+body.light-mode #map {
+    background: #ffffff;
+}
+
+body.light-mode .location-card {
+    background: #ffffff;
+    border: 2px solid #0f172a;
+}
+
+body.light-mode .location-card:hover {
+    border-color: #0284c7;
+}
+
 .locations-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

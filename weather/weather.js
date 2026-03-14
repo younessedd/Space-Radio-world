@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         weatherContent.innerHTML = `
             <div class="current-weather">
                 <div class="weather-main">
-                    <div class="weather-icon">${icon}</div>
+                    <div class="weather-icon" onclick="this.innerHTML='⏳'; loadWeather(currentCity)" title="Click to refresh">${icon}</div>
                     <div class="temperature">${temp}<span>°</span></div>
                     <div class="weather-description">${description}</div>
                 </div>

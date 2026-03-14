@@ -102,7 +102,7 @@
                 <a href="#contact">Contact</a>
             </div>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                <span class="theme-icon">🌙</span>
+                <span class="theme-icon" id="themeIcon">🌙</span>
             </button>
             <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu" onclick="toggleMenu()">
                 <span></span>
@@ -206,124 +206,124 @@
                     </div>
                     <select id="countryFilter" class="country-filter">
                         <option value="">All Countries</option>
-                        <option value="AF">🇦🇫 Afghanistan</option>
-                        <option value="AL">🇦🇱 Albania</option>
-                        <option value="DZ">🇩🇿 Algeria</option>
-                        <option value="AO">��🇴 Angola</option>
-                        <option value="AR">🇦🇷 Argentina</option>
-                        <option value="AM">🇦🇲 Armenia</option>
-                        <option value="AU">🇦🇺 Australia</option>
-                        <option value="AT">��🇹 Austria</option>
-                        <option value="AZ">🇦🇿 Azerbaijan</option>
-                        <option value="BH">🇧🇭 Bahrain</option>
-                        <option value="BD">🇧🇩 Bangladesh</option>
-                        <option value="BY">🇧🇾 Belarus</option>
-                        <option value="BE">🇧🇪 Belgium</option>
-                        <option value="BZ">🇧🇿 Belize</option>
-                        <option value="BJ">🇧🇯 Benin</option>
-                        <option value="BT">��🇹 Bhutan</option>
-                        <option value="BO">🇧🇴 Bolivia</option>
-                        <option value="BA">🇧🇦 Bosnia and Herzegovina</option>
-                        <option value="BW">🇧🇼 Botswana</option>
-                        <option value="BR">🇧🇷 Brazil</option>
-                        <option value="BG">🇧🇬 Bulgaria</option>
-                        <option value="KH">🇰🇭 Cambodia</option>
-                        <option value="CM">🇨🇲 Cameroon</option>
-                        <option value="CA">🇨🇦 Canada</option>
-                        <option value="CL">🇨🇱 Chile</option>
-                        <option value="CN">🇨🇳 China</option>
-                        <option value="CO">��🇴 Colombia</option>
-                        <option value="CR">🇨🇷 Costa Rica</option>
-                        <option value="HR">🇭🇷 Croatia</option>
-                        <option value="CU">🇨🇺 Cuba</option>
-                        <option value="CY">🇨🇾 Cyprus</option>
-                        <option value="CZ">🇨🇿 Czech Republic</option>
-                        <option value="DK">🇩🇰 Denmark</option>
-                        <option value="DO">🇩🇴 Dominican Republic</option>
-                        <option value="EC">🇪🇨 Ecuador</option>
-                        <option value="EG">🇪🇬 Egypt</option>
-                        <option value="SV">��🇻 El Salvador</option>
-                        <option value="EE">🇪🇪 Estonia</option>
-                        <option value="ET">🇪🇹 Ethiopia</option>
-                        <option value="FI">🇫🇮 Finland</option>
-                        <option value="FR">��🇷 France</option>
-                        <option value="GE">🇬🇪 Georgia</option>
-                        <option value="DE">��🇪 Germany</option>
-                        <option value="GH">��🇭 Ghana</option>
-                        <option value="GR">🇬🇷 Greece</option>
-                        <option value="GT">🇬🇹 Guatemala</option>
-                        <option value="HN">🇭🇳 Honduras</option>
-                        <option value="HK">🇭🇰 Hong Kong</option>
-                        <option value="HU">🇭🇺 Hungary</option>
-                        <option value="IS">🇮🇸 Iceland</option>
-                        <option value="IN">🇮🇳 India</option>
-                        <option value="ID">🇮🇩 Indonesia</option>
-                        <option value="IR">🇮🇷 Iran</option>
-                        <option value="IQ">🇮🇶 Iraq</option>
-                        <option value="IE">🇮🇪 Ireland</option>
-                        <option value="IL">🇮🇱 Israel</option>
-                        <option value="IT">🇮🇹 Italy</option>
-                        <option value="JM">🇯🇲 Jamaica</option>
-                        <option value="JP">🇯🇵 Japan</option>
-                        <option value="JO">🇯🇴 Jordan</option>
-                        <option value="KZ">🇰🇿 Kazakhstan</option>
-                        <option value="KE">🇰🇪 Kenya</option>
-                        <option value="KR">🇰🇷 South Korea</option>
-                        <option value="KW">🇰🇼 Kuwait</option>
-                        <option value="LV">🇱🇻 Latvia</option>
-                        <option value="LB">🇱🇧 Lebanon</option>
-                        <option value="LT">🇱🇹 Lithuania</option>
-                        <option value="LU">🇱🇺 Luxembourg</option>
-                        <option value="MY">🇲🇾 Malaysia</option>
-                        <option value="MV">🇲🇻 Maldives</option>
-                        <option value="MT">🇲🇹 Malta</option>
-                        <option value="MX">🇲🇽 Mexico</option>
-                        <option value="MD">🇲🇩 Moldova</option>
-                        <option value="MC">🇲🇨 Monaco</option>
-                        <option value="MN">🇲🇳 Mongolia</option>
-                        <option value="ME">🇲🇪 Montenegro</option>
-                        <option value="MA">🇲🇦 Morocco</option>
-                        <option value="NP">🇳🇵 Nepal</option>
-                        <option value="NL">🇳🇱 Netherlands</option>
-                        <option value="NZ">🇳🇿 New Zealand</option>
-                        <option value="NI">🇳🇮 Nicaragua</option>
-                        <option value="NG">🇳🇬 Nigeria</option>
-                        <option value="NO">🇳🇴 Norway</option>
-                        <option value="OM">🇴🇲 Oman</option>
-                        <option value="PK">🇵🇰 Pakistan</option>
-                        <option value="PA">🇵🇦 Panama</option>
-                        <option value="PY">🇵🇾 Paraguay</option>
-                        <option value="PE">🇵🇪 Peru</option>
-                        <option value="PH">🇵🇭 Philippines</option>
-                        <option value="PL">🇵🇱 Poland</option>
-                        <option value="PT">🇵🇹 Portugal</option>
-                        <option value="QA">🇶🇦 Qatar</option>
-                        <option value="RO">🇷🇴 Romania</option>
-                        <option value="RU">🇷🇺 Russia</option>
-                        <option value="SA">🇸🇦 Saudi Arabia</option>
-                        <option value="RS">🇷🇸 Serbia</option>
-                        <option value="SG">🇸🇬 Singapore</option>
-                        <option value="SK">🇸🇰 Slovakia</option>
-                        <option value="SI">🇸🇮 Slovenia</option>
-                        <option value="ZA">🇿🇦 South Africa</option>
-                        <option value="ES">🇪🇸 Spain</option>
-                        <option value="LK">🇱🇰 Sri Lanka</option>
-                        <option value="SE">🇸🇪 Sweden</option>
-                        <option value="CH">🇨🇭 Switzerland</option>
-                        <option value="TW">🇹🇼 Taiwan</option>
-                        <option value="TH">🇹🇭 Thailand</option>
-                        <option value="TN">🇹🇳 Tunisia</option>
-                        <option value="TR">🇹🇷 Turkey</option>
-                        <option value="UA">🇺🇦 Ukraine</option>
-                        <option value="AE">🇦🇪 UAE</option>
-                        <option value="GB">🇬🇧 United Kingdom</option>
-                        <option value="US">🇺🇸 United States</option>
-                        <option value="UY">🇺🇾 Uruguay</option>
-                        <option value="UZ">🇺🇿 Uzbekistan</option>
-                        <option value="VE">🇻🇪 Venezuela</option>
-                        <option value="VN">🇻🇳 Vietnam</option>
-                        <option value="ZM">🇿🇲 Zambia</option>
-                        <option value="ZW">🇿🇼 Zimbabwe</option>
+                        <option value="AF"><img src="https://flagcdn.com/w20/af.png" srcset="https://flagcdn.com/w40/af.png 2x" alt=""> Afghanistan</option>
+                        <option value="AL"><img src="https://flagcdn.com/w20/al.png" srcset="https://flagcdn.com/w40/al.png 2x" alt=""> Albania</option>
+                        <option value="DZ"><img src="https://flagcdn.com/w20/dz.png" srcset="https://flagcdn.com/w40/dz.png 2x" alt=""> Algeria</option>
+                        <option value="AO"><img src="https://flagcdn.com/w20/ao.png" srcset="https://flagcdn.com/w40/ao.png 2x" alt=""> Angola</option>
+                        <option value="AR"><img src="https://flagcdn.com/w20/ar.png" srcset="https://flagcdn.com/w40/ar.png 2x" alt=""> Argentina</option>
+                        <option value="AM"><img src="https://flagcdn.com/w20/am.png" srcset="https://flagcdn.com/w40/am.png 2x" alt=""> Armenia</option>
+                        <option value="AU"><img src="https://flagcdn.com/w20/au.png" srcset="https://flagcdn.com/w40/au.png 2x" alt=""> Australia</option>
+                        <option value="AT"><img src="https://flagcdn.com/w20/at.png" srcset="https://flagcdn.com/w40/at.png 2x" alt=""> Austria</option>
+                        <option value="AZ"><img src="https://flagcdn.com/w20/az.png" srcset="https://flagcdn.com/w40/az.png 2x" alt=""> Azerbaijan</option>
+                        <option value="BH"><img src="https://flagcdn.com/w20/bh.png" srcset="https://flagcdn.com/w40/bh.png 2x" alt=""> Bahrain</option>
+                        <option value="BD"><img src="https://flagcdn.com/w20/bd.png" srcset="https://flagcdn.com/w40/bd.png 2x" alt=""> Bangladesh</option>
+                        <option value="BY"><img src="https://flagcdn.com/w20/by.png" srcset="https://flagcdn.com/w40/by.png 2x" alt=""> Belarus</option>
+                        <option value="BE"><img src="https://flagcdn.com/w20/be.png" srcset="https://flagcdn.com/w40/be.png 2x" alt=""> Belgium</option>
+                        <option value="BZ"><img src="https://flagcdn.com/w20/bz.png" srcset="https://flagcdn.com/w40/bz.png 2x" alt=""> Belize</option>
+                        <option value="BJ"><img src="https://flagcdn.com/w20/bj.png" srcset="https://flagcdn.com/w40/bj.png 2x" alt=""> Benin</option>
+                        <option value="BT"><img src="https://flagcdn.com/w20/bt.png" srcset="https://flagcdn.com/w40/bt.png 2x" alt=""> Bhutan</option>
+                        <option value="BO"><img src="https://flagcdn.com/w20/bo.png" srcset="https://flagcdn.com/w40/bo.png 2x" alt=""> Bolivia</option>
+                        <option value="BA"><img src="https://flagcdn.com/w20/ba.png" srcset="https://flagcdn.com/w40/ba.png 2x" alt=""> Bosnia and Herzegovina</option>
+                        <option value="BW"><img src="https://flagcdn.com/w20/bw.png" srcset="https://flagcdn.com/w40/bw.png 2x" alt=""> Botswana</option>
+                        <option value="BR"><img src="https://flagcdn.com/w20/br.png" srcset="https://flagcdn.com/w40/br.png 2x" alt=""> Brazil</option>
+                        <option value="BG"><img src="https://flagcdn.com/w20/bg.png" srcset="https://flagcdn.com/w40/bg.png 2x" alt=""> Bulgaria</option>
+                        <option value="KH"><img src="https://flagcdn.com/w20/kh.png" srcset="https://flagcdn.com/w40/kh.png 2x" alt=""> Cambodia</option>
+                        <option value="CM"><img src="https://flagcdn.com/w20/cm.png" srcset="https://flagcdn.com/w40/cm.png 2x" alt=""> Cameroon</option>
+                        <option value="CA"><img src="https://flagcdn.com/w20/ca.png" srcset="https://flagcdn.com/w40/ca.png 2x" alt=""> Canada</option>
+                        <option value="CL"><img src="https://flagcdn.com/w20/cl.png" srcset="https://flagcdn.com/w40/cl.png 2x" alt=""> Chile</option>
+                        <option value="CN"><img src="https://flagcdn.com/w20/cn.png" srcset="https://flagcdn.com/w40/cn.png 2x" alt=""> China</option>
+                        <option value="CO"><img src="https://flagcdn.com/w20/co.png" srcset="https://flagcdn.com/w40/co.png 2x" alt=""> Colombia</option>
+                        <option value="CR"><img src="https://flagcdn.com/w20/cr.png" srcset="https://flagcdn.com/w40/cr.png 2x" alt=""> Costa Rica</option>
+                        <option value="HR"><img src="https://flagcdn.com/w20/hr.png" srcset="https://flagcdn.com/w40/hr.png 2x" alt=""> Croatia</option>
+                        <option value="CU"><img src="https://flagcdn.com/w20/cu.png" srcset="https://flagcdn.com/w40/cu.png 2x" alt=""> Cuba</option>
+                        <option value="CY"><img src="https://flagcdn.com/w20/cy.png" srcset="https://flagcdn.com/w40/cy.png 2x" alt=""> Cyprus</option>
+                        <option value="CZ"><img src="https://flagcdn.com/w20/cz.png" srcset="https://flagcdn.com/w40/cz.png 2x" alt=""> Czech Republic</option>
+                        <option value="DK"><img src="https://flagcdn.com/w20/dk.png" srcset="https://flagcdn.com/w40/dk.png 2x" alt=""> Denmark</option>
+                        <option value="DO"><img src="https://flagcdn.com/w20/do.png" srcset="https://flagcdn.com/w40/do.png 2x" alt=""> Dominican Republic</option>
+                        <option value="EC"><img src="https://flagcdn.com/w20/ec.png" srcset="https://flagcdn.com/w40/ec.png 2x" alt=""> Ecuador</option>
+                        <option value="EG"><img src="https://flagcdn.com/w20/eg.png" srcset="https://flagcdn.com/w40/eg.png 2x" alt=""> Egypt</option>
+                        <option value="SV"><img src="https://flagcdn.com/w20/sv.png" srcset="https://flagcdn.com/w40/sv.png 2x" alt=""> El Salvador</option>
+                        <option value="EE"><img src="https://flagcdn.com/w20/ee.png" srcset="https://flagcdn.com/w40/ee.png 2x" alt=""> Estonia</option>
+                        <option value="ET"><img src="https://flagcdn.com/w20/et.png" srcset="https://flagcdn.com/w40/et.png 2x" alt=""> Ethiopia</option>
+                        <option value="FI"><img src="https://flagcdn.com/w20/fi.png" srcset="https://flagcdn.com/w40/fi.png 2x" alt=""> Finland</option>
+                        <option value="FR"><img src="https://flagcdn.com/w20/fr.png" srcset="https://flagcdn.com/w40/fr.png 2x" alt=""> France</option>
+                        <option value="GE"><img src="https://flagcdn.com/w20/ge.png" srcset="https://flagcdn.com/w40/ge.png 2x" alt=""> Georgia</option>
+                        <option value="DE"><img src="https://flagcdn.com/w20/de.png" srcset="https://flagcdn.com/w40/de.png 2x" alt=""> Germany</option>
+                        <option value="GH"><img src="https://flagcdn.com/w20/gh.png" srcset="https://flagcdn.com/w40/gh.png 2x" alt=""> Ghana</option>
+                        <option value="GR"><img src="https://flagcdn.com/w20/gr.png" srcset="https://flagcdn.com/w40/gr.png 2x" alt=""> Greece</option>
+                        <option value="GT"><img src="https://flagcdn.com/w20/gt.png" srcset="https://flagcdn.com/w40/gt.png 2x" alt=""> Guatemala</option>
+                        <option value="HN"><img src="https://flagcdn.com/w20/hn.png" srcset="https://flagcdn.com/w40/hn.png 2x" alt=""> Honduras</option>
+                        <option value="HK"><img src="https://flagcdn.com/w20/hk.png" srcset="https://flagcdn.com/w40/hk.png 2x" alt=""> Hong Kong</option>
+                        <option value="HU"><img src="https://flagcdn.com/w20/hu.png" srcset="https://flagcdn.com/w40/hu.png 2x" alt=""> Hungary</option>
+                        <option value="IS"><img src="https://flagcdn.com/w20/is.png" srcset="https://flagcdn.com/w40/is.png 2x" alt=""> Iceland</option>
+                        <option value="IN"><img src="https://flagcdn.com/w20/in.png" srcset="https://flagcdn.com/w40/in.png 2x" alt=""> India</option>
+                        <option value="ID"><img src="https://flagcdn.com/w20/id.png" srcset="https://flagcdn.com/w40/id.png 2x" alt=""> Indonesia</option>
+                        <option value="IR"><img src="https://flagcdn.com/w20/ir.png" srcset="https://flagcdn.com/w40/ir.png 2x" alt=""> Iran</option>
+                        <option value="IQ"><img src="https://flagcdn.com/w20/iq.png" srcset="https://flagcdn.com/w40/iq.png 2x" alt=""> Iraq</option>
+                        <option value="IE"><img src="https://flagcdn.com/w20/ie.png" srcset="https://flagcdn.com/w40/ie.png 2x" alt=""> Ireland</option>
+                        <option value="IL"><img src="https://flagcdn.com/w20/il.png" srcset="https://flagcdn.com/w40/il.png 2x" alt=""> Israel</option>
+                        <option value="IT"><img src="https://flagcdn.com/w20/it.png" srcset="https://flagcdn.com/w40/it.png 2x" alt=""> Italy</option>
+                        <option value="JM"><img src="https://flagcdn.com/w20/jm.png" srcset="https://flagcdn.com/w40/jm.png 2x" alt=""> Jamaica</option>
+                        <option value="JP"><img src="https://flagcdn.com/w20/jp.png" srcset="https://flagcdn.com/w40/jp.png 2x" alt=""> Japan</option>
+                        <option value="JO"><img src="https://flagcdn.com/w20/jo.png" srcset="https://flagcdn.com/w40/jo.png 2x" alt=""> Jordan</option>
+                        <option value="KZ"><img src="https://flagcdn.com/w20/kz.png" srcset="https://flagcdn.com/w40/kz.png 2x" alt=""> Kazakhstan</option>
+                        <option value="KE"><img src="https://flagcdn.com/w20/ke.png" srcset="https://flagcdn.com/w40/ke.png 2x" alt=""> Kenya</option>
+                        <option value="KR"><img src="https://flagcdn.com/w20/kr.png" srcset="https://flagcdn.com/w40/kr.png 2x" alt=""> South Korea</option>
+                        <option value="KW"><img src="https://flagcdn.com/w20/kw.png" srcset="https://flagcdn.com/w40/kw.png 2x" alt=""> Kuwait</option>
+                        <option value="LV"><img src="https://flagcdn.com/w20/lv.png" srcset="https://flagcdn.com/w40/lv.png 2x" alt=""> Latvia</option>
+                        <option value="LB"><img src="https://flagcdn.com/w20/lb.png" srcset="https://flagcdn.com/w40/lb.png 2x" alt=""> Lebanon</option>
+                        <option value="LT"><img src="https://flagcdn.com/w20/lt.png" srcset="https://flagcdn.com/w40/lt.png 2x" alt=""> Lithuania</option>
+                        <option value="LU"><img src="https://flagcdn.com/w20/lu.png" srcset="https://flagcdn.com/w40/lu.png 2x" alt=""> Luxembourg</option>
+                        <option value="MY"><img src="https://flagcdn.com/w20/my.png" srcset="https://flagcdn.com/w40/my.png 2x" alt=""> Malaysia</option>
+                        <option value="MV"><img src="https://flagcdn.com/w20/mv.png" srcset="https://flagcdn.com/w40/mv.png 2x" alt=""> Maldives</option>
+                        <option value="MT"><img src="https://flagcdn.com/w20/mt.png" srcset="https://flagcdn.com/w40/mt.png 2x" alt=""> Malta</option>
+                        <option value="MX"><img src="https://flagcdn.com/w20/mx.png" srcset="https://flagcdn.com/w40/mx.png 2x" alt=""> Mexico</option>
+                        <option value="MD"><img src="https://flagcdn.com/w20/md.png" srcset="https://flagcdn.com/w40/md.png 2x" alt=""> Moldova</option>
+                        <option value="MC"><img src="https://flagcdn.com/w20/mc.png" srcset="https://flagcdn.com/w40/mc.png 2x" alt=""> Monaco</option>
+                        <option value="MN"><img src="https://flagcdn.com/w20/mn.png" srcset="https://flagcdn.com/w40/mn.png 2x" alt=""> Mongolia</option>
+                        <option value="ME"><img src="https://flagcdn.com/w20/me.png" srcset="https://flagcdn.com/w40/me.png 2x" alt=""> Montenegro</option>
+                        <option value="MA"><img src="https://flagcdn.com/w20/ma.png" srcset="https://flagcdn.com/w40/ma.png 2x" alt=""> Morocco</option>
+                        <option value="NP"><img src="https://flagcdn.com/w20/np.png" srcset="https://flagcdn.com/w40/np.png 2x" alt=""> Nepal</option>
+                        <option value="NL"><img src="https://flagcdn.com/w20/nl.png" srcset="https://flagcdn.com/w40/nl.png 2x" alt=""> Netherlands</option>
+                        <option value="NZ"><img src="https://flagcdn.com/w20/nz.png" srcset="https://flagcdn.com/w40/nz.png 2x" alt=""> New Zealand</option>
+                        <option value="NI"><img src="https://flagcdn.com/w20/ni.png" srcset="https://flagcdn.com/w40/ni.png 2x" alt=""> Nicaragua</option>
+                        <option value="NG"><img src="https://flagcdn.com/w20/ng.png" srcset="https://flagcdn.com/w40/ng.png 2x" alt=""> Nigeria</option>
+                        <option value="NO"><img src="https://flagcdn.com/w20/no.png" srcset="https://flagcdn.com/w40/no.png 2x" alt=""> Norway</option>
+                        <option value="OM"><img src="https://flagcdn.com/w20/om.png" srcset="https://flagcdn.com/w40/om.png 2x" alt=""> Oman</option>
+                        <option value="PK"><img src="https://flagcdn.com/w20/pk.png" srcset="https://flagcdn.com/w40/pk.png 2x" alt=""> Pakistan</option>
+                        <option value="PA"><img src="https://flagcdn.com/w20/pa.png" srcset="https://flagcdn.com/w40/pa.png 2x" alt=""> Panama</option>
+                        <option value="PY"><img src="https://flagcdn.com/w20/py.png" srcset="https://flagcdn.com/w40/py.png 2x" alt=""> Paraguay</option>
+                        <option value="PE"><img src="https://flagcdn.com/w20/pe.png" srcset="https://flagcdn.com/w40/pe.png 2x" alt=""> Peru</option>
+                        <option value="PH"><img src="https://flagcdn.com/w20/ph.png" srcset="https://flagcdn.com/w40/ph.png 2x" alt=""> Philippines</option>
+                        <option value="PL"><img src="https://flagcdn.com/w20/pl.png" srcset="https://flagcdn.com/w40/pl.png 2x" alt=""> Poland</option>
+                        <option value="PT"><img src="https://flagcdn.com/w20/pt.png" srcset="https://flagcdn.com/w40/pt.png 2x" alt=""> Portugal</option>
+                        <option value="QA"><img src="https://flagcdn.com/w20/qa.png" srcset="https://flagcdn.com/w40/qa.png 2x" alt=""> Qatar</option>
+                        <option value="RO"><img src="https://flagcdn.com/w20/ro.png" srcset="https://flagcdn.com/w40/ro.png 2x" alt=""> Romania</option>
+                        <option value="RU"><img src="https://flagcdn.com/w20/ru.png" srcset="https://flagcdn.com/w40/ru.png 2x" alt=""> Russia</option>
+                        <option value="SA"><img src="https://flagcdn.com/w20/sa.png" srcset="https://flagcdn.com/w40/sa.png 2x" alt=""> Saudi Arabia</option>
+                        <option value="RS"><img src="https://flagcdn.com/w20/rs.png" srcset="https://flagcdn.com/w40/rs.png 2x" alt=""> Serbia</option>
+                        <option value="SG"><img src="https://flagcdn.com/w20/sg.png" srcset="https://flagcdn.com/w40/sg.png 2x" alt=""> Singapore</option>
+                        <option value="SK"><img src="https://flagcdn.com/w20/sk.png" srcset="https://flagcdn.com/w40/sk.png 2x" alt=""> Slovakia</option>
+                        <option value="SI"><img src="https://flagcdn.com/w20/si.png" srcset="https://flagcdn.com/w40/si.png 2x" alt=""> Slovenia</option>
+                        <option value="ZA"><img src="https://flagcdn.com/w20/za.png" srcset="https://flagcdn.com/w40/za.png 2x" alt=""> South Africa</option>
+                        <option value="ES"><img src="https://flagcdn.com/w20/es.png" srcset="https://flagcdn.com/w40/es.png 2x" alt=""> Spain</option>
+                        <option value="LK"><img src="https://flagcdn.com/w20/lk.png" srcset="https://flagcdn.com/w40/lk.png 2x" alt=""> Sri Lanka</option>
+                        <option value="SE"><img src="https://flagcdn.com/w20/se.png" srcset="https://flagcdn.com/w40/se.png 2x" alt=""> Sweden</option>
+                        <option value="CH"><img src="https://flagcdn.com/w20/ch.png" srcset="https://flagcdn.com/w40/ch.png 2x" alt=""> Switzerland</option>
+                        <option value="TW"><img src="https://flagcdn.com/w20/tw.png" srcset="https://flagcdn.com/w40/tw.png 2x" alt=""> Taiwan</option>
+                        <option value="TH"><img src="https://flagcdn.com/w20/th.png" srcset="https://flagcdn.com/w40/th.png 2x" alt=""> Thailand</option>
+                        <option value="TN"><img src="https://flagcdn.com/w20/tn.png" srcset="https://flagcdn.com/w40/tn.png 2x" alt=""> Tunisia</option>
+                        <option value="TR"><img src="https://flagcdn.com/w20/tr.png" srcset="https://flagcdn.com/w40/tr.png 2x" alt=""> Turkey</option>
+                        <option value="UA"><img src="https://flagcdn.com/w20/ua.png" srcset="https://flagcdn.com/w40/ua.png 2x" alt=""> Ukraine</option>
+                        <option value="AE"><img src="https://flagcdn.com/w20/ae.png" srcset="https://flagcdn.com/w40/ae.png 2x" alt=""> UAE</option>
+                        <option value="GB"><img src="https://flagcdn.com/w20/gb.png" srcset="https://flagcdn.com/w40/gb.png 2x" alt=""> United Kingdom</option>
+                        <option value="US"><img src="https://flagcdn.com/w20/us.png" srcset="https://flagcdn.com/w40/us.png 2x" alt=""> United States</option>
+                        <option value="UY"><img src="https://flagcdn.com/w20/uy.png" srcset="https://flagcdn.com/w40/uy.png 2x" alt=""> Uruguay</option>
+                        <option value="UZ"><img src="https://flagcdn.com/w20/uz.png" srcset="https://flagcdn.com/w40/uz.png 2x" alt=""> Uzbekistan</option>
+                        <option value="VE"><img src="https://flagcdn.com/w20/ve.png" srcset="https://flagcdn.com/w40/ve.png 2x" alt=""> Venezuela</option>
+                        <option value="VN"><img src="https://flagcdn.com/w20/vn.png" srcset="https://flagcdn.com/w40/vn.png 2x" alt=""> Vietnam</option>
+                        <option value="ZM"><img src="https://flagcdn.com/w20/zm.png" srcset="https://flagcdn.com/w40/zm.png 2x" alt=""> Zambia</option>
+                        <option value="ZW"><img src="https://flagcdn.com/w20/zw.png" srcset="https://flagcdn.com/w40/zw.png 2x" alt=""> Zimbabwe</option>
                     </select>
                 </div>
                 
@@ -746,8 +746,6 @@
         </div>
     </footer>
 
-    <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
-
     <style>
         .main-nav {
             position: fixed;
@@ -818,6 +816,10 @@
         .theme-toggle:hover {
             border-color: var(--neon-cyan);
             transform: scale(1.1);
+        }
+
+        body.light-mode .theme-toggle:hover {
+            border-color: #0284c7;
         }
 
         .mobile-menu-btn {
@@ -903,24 +905,6 @@
                 console.error('Elements not found!');
             }
         }
-
-        document.getElementById('backToTop').addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        const themeToggle = document.getElementById('themeToggle');
-        themeToggle.addEventListener('click', () => {
-            const isDark = document.body.classList.contains('dark-mode');
-            document.body.classList.remove('dark-mode', 'light-mode');
-            document.body.classList.add(isDark ? 'light-mode' : 'dark-mode');
-            localStorage.setItem('theme', isDark ? 'light' : 'dark');
-            themeToggle.querySelector('.theme-icon').textContent = isDark ? '☀️' : '🌙';
-        });
-
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.body.classList.remove('dark-mode', 'light-mode');
-        document.body.classList.add(`${savedTheme}-mode`);
-        themeToggle.querySelector('.theme-icon').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
     </script>
 </body>
 </html>

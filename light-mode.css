@@ -1,9 +1,22 @@
 body.light-mode {
-    --space-black: #f8fafc;
-    --deep-space: #f1f5f9;
-    --deep-purple: #e2e8f0;
-    --text-primary: #0f172a;
+    --space-black: #f0f4f8;
+    --deep-space: #e2e8f0;
+    --deep-purple: #cbd5e1;
+    --text-primary: #1e293b;
     --text-muted: #64748b;
+    --card-bg: #ffffff;
+    --card-border: #334155;
+    --input-bg: #ffffff;
+    --input-border: #475569;
+    --scrollbar-track: #cbd5e1;
+    --scrollbar-thumb: #64748b;
+    --accent-blue: #0ea5e9;
+    --accent-gradient: linear-gradient(135deg, #0ea5e9, #8b5cf6);
+}
+
+body.light-mode {
+    background: var(--space-black);
+    color: var(--text-primary);
 }
 
 body.light-mode .hero,
@@ -17,9 +30,12 @@ body.light-mode .mobile-app,
 body.light-mode .contact,
 body.light-mode .maps,
 body.light-mode .reviews,
-body.light-mode .stats,
-body.light-mode .footer {
+body.light-mode .stats {
     background: var(--space-black);
+}
+
+body.light-mode .footer {
+    background: var(--deep-space);
 }
 
 body.light-mode .station-card,
@@ -30,40 +46,436 @@ body.light-mode .stat-card,
 body.light-mode .forecast-card,
 body.light-mode .location-card,
 body.light-mode .info-item {
-    background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.08);
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 body.light-mode .form-group input,
 body.light-mode .form-group textarea,
 body.light-mode .radio-search input,
 body.light-mode .city-search input {
-    background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.1);
+    background: var(--input-bg);
+    border: 2px solid var(--input-border);
     color: var(--text-primary);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+}
+
+body.light-mode .form-group input:focus,
+body.light-mode .form-group textarea:focus,
+body.light-mode .radio-search input:focus,
+body.light-mode .city-search input:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+    outline: none;
 }
 
 body.light-mode .title-main,
 body.light-mode .section-title,
 body.light-mode .hero-title .title-main {
-    background: linear-gradient(135deg, #0284c7, #7c3aed, #0284c7);
+    background: var(--accent-gradient);
     -webkit-background-clip: text;
     background-clip: text;
+    color: transparent;
 }
 
 body.light-mode .main-nav {
-    background: rgba(248, 250, 252, 0.9);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--card-border);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
 }
 
 body.light-mode .nav-links a {
     color: var(--text-primary);
+    font-weight: 500;
+}
+
+body.light-mode .nav-links a:hover {
+    color: var(--accent-blue);
 }
 
 body.light-mode .footer {
-    background: #e2e8f0;
+    background: var(--deep-space);
+    border-top: 2px solid var(--card-border);
 }
 
 body.light-mode .footer-bottom {
-    border-top-color: rgba(0, 0, 0, 0.1);
+    border-top: 2px solid var(--card-border);
+}
+
+body.light-mode .hero-subtitle,
+body.light-mode .section-subtitle,
+body.light-mode .title-line,
+body.light-mode .stat-label,
+body.light-mode .scroll-indicator,
+body.light-mode .about-text p {
+    color: var(--text-muted);
+}
+
+body.light-mode .scroll-arrow {
+    border-color: var(--text-muted);
+}
+
+body.light-mode .scroll-arrow::before {
+    background: var(--accent-blue);
+}
+
+body.light-mode .station-name,
+body.light-mode .show-title,
+body.light-mode .music-title,
+body.light-mode .section-title {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+body.light-mode .station-genre,
+body.light-mode .show-time,
+body.light-mode .music-artist {
+    color: var(--text-muted);
+}
+
+body.light-mode .btn-secondary {
+    border: 2px solid var(--card-border);
+    color: var(--text-primary);
+    background: transparent;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+body.light-mode .btn-secondary:hover {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    background: rgba(14, 165, 233, 0.05);
+}
+
+body.light-mode .genre-btn {
+    background: var(--card-bg);
+    color: var(--text-muted);
+    border: 2px solid var(--card-border);
+    border-radius: 25px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+body.light-mode .genre-btn:hover {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+body.light-mode .genre-btn.active {
+    background: var(--accent-gradient);
+    color: white;
+    border-color: transparent;
+}
+
+body.light-mode .country-filter {
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    color: var(--text-primary);
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+}
+
+body.light-mode .radio-player-bar {
+    background: var(--deep-space);
+    border-top: 2px solid var(--card-border);
+    border-radius: 16px 16px 0 0;
+}
+
+body.light-mode .now-playing h4 {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+body.light-mode .now-playing p {
+    color: var(--text-muted);
+}
+
+body.light-mode .volume-icon {
+    filter: invert(0.3);
+}
+
+body.light-mode .control-btn {
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    color: var(--text-primary);
+    border-radius: 50%;
+}
+
+body.light-mode .control-btn:hover {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+body.light-mode .audio-visualizer .bar {
+    background: var(--accent-blue);
+}
+
+body.light-mode .weather-date {
+    color: var(--text-muted);
+}
+
+body.light-mode .weather-content {
+    border: 2px solid var(--card-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    background: var(--card-bg);
+}
+
+body.light-mode .hero-stats {
+    border: 2px solid var(--card-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    background: var(--card-bg);
+    display: inline-flex;
+    gap: 2rem;
+}
+
+body.light-mode .unit-btn {
+    background: var(--card-bg);
+    color: var(--text-muted);
+    border: 2px solid var(--card-border);
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    font-weight: 500;
+}
+
+body.light-mode .unit-btn.active {
+    background: var(--accent-gradient);
+    color: white;
+    border-color: transparent;
+}
+
+body.light-mode .forecast-day {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+body.light-mode .forecast-temp {
+    color: var(--accent-blue);
+    font-weight: 600;
+}
+
+body.light-mode .schedule-tab {
+    background: var(--card-bg);
+    color: var(--text-muted);
+    border: 2px solid var(--card-border);
+    border-radius: 10px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 500;
+}
+
+body.light-mode .schedule-tab.active {
+    background: var(--accent-gradient);
+    color: white;
+    border-color: transparent;
+}
+
+body.light-mode .schedule-item {
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+body.light-mode .schedule-time {
+    color: var(--accent-blue);
+    font-weight: 600;
+}
+
+body.light-mode .schedule-show {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+body.light-mode .about-text h3 {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1.75rem;
+}
+
+body.light-mode .feature {
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+body.light-mode .feature span {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+body.light-mode .feature-icon {
+    color: var(--accent-blue);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+body.light-mode .app-info h3 {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1.75rem;
+}
+
+body.light-mode .app-info p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+body.light-mode .app-feature {
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+body.light-mode .app-feature h4 {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+body.light-mode .app-feature p {
+    color: var(--text-muted);
+}
+
+body.light-mode .app-store-btn {
+    background: var(--text-primary);
+    color: white;
+    border: 2px solid var(--card-border);
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+}
+
+body.light-mode .phone-mockup {
+    background: var(--text-primary);
+    border: 3px solid var(--card-border);
+    border-radius: 30px;
+}
+
+body.light-mode .phone-screen {
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 20px;
+}
+
+body.light-mode .app-header {
+    color: white;
+}
+
+body.light-mode .station-item {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+body.light-mode .station-item.active {
+    color: white;
+}
+
+body.light-mode .now-playing-bar {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+body.light-mode .theme-toggle {
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 1.25rem;
+}
+
+body.light-mode .mobile-menu-btn {
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 10px;
+    padding: 0.5rem;
+}
+
+body.light-mode .mobile-menu-btn span {
+    background: var(--text-primary);
+}
+
+body.light-mode .nav-links[data-visible="true"] {
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .nav-links[data-visible="true"] a {
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--deep-space);
+    padding: 1rem;
+}
+
+body.light-mode .nav-links[data-visible="true"] a:hover {
+    background: var(--deep-space);
+    color: var(--accent-blue);
+}
+
+body.light-mode ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: 10px;
+}
+
+body.light-mode ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 10px;
+}
+
+body.light-mode ::selection {
+    background: var(--accent-blue);
+    color: white;
+}
+
+body.light-mode .loading-spinner::before {
+    border-color: rgba(0, 0, 0, 0.1);
+    border-top-color: var(--accent-blue);
+}
+
+body.light-mode .page-btn {
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    color: var(--text-muted);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+}
+
+body.light-mode .page-btn:hover {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+body.light-mode .page-btn.active {
+    background: var(--accent-gradient);
+    color: white;
+    border-color: transparent;
+}
+
+body.light-mode .section-header {
+    margin-bottom: 2.5rem;
+}
+
+body.light-mode .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+body.light-mode .section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: var(--accent-gradient);
+    margin: 0.75rem auto 0;
+    border-radius: 2px;
 }

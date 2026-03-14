@@ -239,8 +239,34 @@ document.addEventListener('DOMContentLoaded', () => {
             audioVisualizer.classList.add('playing');
         }).catch(error => {
             console.error('Error playing station:', error);
-            alert('Unable to play this station. Please try another one.');
+            showToastNotification('Unable to play this station. Please try another one.', 'error');
         });
+    }
+
+    function showToastNotification(message, type = 'success') {
+        const existing = document.querySelector('.toast-notification');
+        if (existing) existing.remove();
+        
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        const icon = type === 'error' ? '✕' : '✓';
+        const title = type === 'error' ? 'Playback Error' : 'Success';
+        
+        toast.innerHTML = `
+            <div class="toast-icon" style="background: ${type === 'error' ? 'linear-gradient(135deg, #ef4444, #dc2626)' : 'linear-gradient(135deg, #22c55e, #16a34a)'}">${icon}</div>
+            <div class="toast-content">
+                <h4>${title}</h4>
+                <p>${message}</p>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+        `;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => toast.classList.add('show'), 10);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 5000);
     }
 
     function updatePlayButton() {
@@ -251,17 +277,27 @@ document.addEventListener('DOMContentLoaded', () => {
     playPauseBtn.addEventListener('click', () => {
         if (!currentStationData) return;
 
+        // Immediate visual feedback
+        const playIcon = playPauseBtn.querySelector('.play-icon');
+        playIcon.style.opacity = '0.5';
+        
         if (isPlaying) {
             audioPlayer.pause();
             isPlaying = false;
             audioVisualizer.classList.remove('playing');
+            playIcon.textContent = '▶';
         } else {
             audioPlayer.play().then(() => {
                 isPlaying = true;
                 audioVisualizer.classList.add('playing');
-            }).catch(console.error);
+                playIcon.textContent = '⏸';
+            }).catch(error => {
+                console.error('Error playing:', error);
+                showToastNotification('Unable to play station', 'error');
+            });
         }
-        updatePlayButton();
+        
+        setTimeout(() => playIcon.style.opacity = '1', 100);
     });
 
     volumeSlider.addEventListener('input', (e) => {
@@ -328,4 +364,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     loadStations();
+
+    // Touch swipe pagination for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const minSwipeDistance = 50;
+
+    stationsGrid.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    stationsGrid.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+        const swipeDistance = touchEndX - touchStartX;
+        
+        // Check if there's a pagination control
+        const pagination = document.getElementById('paginationControls');
+        if (!pagination) return;
+        
+        const totalPages = Math.ceil(500 / stationsPerPage);
+        
+        // Swipe left - next page
+        if (swipeDistance < -minSwipeDistance && currentPage < totalPages) {
+            goToPage(currentPage + 1);
+        }
+        
+        // Swipe right - previous page
+        if (swipeDistance > minSwipeDistance && currentPage > 1) {
+            goToPage(currentPage - 1);
+        }
+    }
 });

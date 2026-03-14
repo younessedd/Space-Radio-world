@@ -83,19 +83,39 @@ function initScrollReveal() {
 
 function initThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
     if (!themeToggle) return;
 
+    // Load saved theme from localStorage, default to 'dark'
     const savedTheme = localStorage.getItem('theme') || 'dark';
+    
+    // Set the body class - remove both first, then add the correct one
+    document.body.classList.remove('dark-mode', 'light-mode');
     document.body.classList.add(`${savedTheme}-mode`);
+    updateThemeIcon(savedTheme);
 
+    // Toggle theme on click and save to localStorage
     themeToggle.addEventListener('click', () => {
         const isDark = document.body.classList.contains('dark-mode');
+        const newTheme = isDark ? 'light' : 'dark';
         
+        // Remove both classes and add the new one
         document.body.classList.remove('dark-mode', 'light-mode');
-        document.body.classList.add(isDark ? 'light-mode' : 'dark-mode');
+        document.body.classList.add(`${newTheme}-mode`);
         
-        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        // Save to localStorage
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+        
+        console.log('Theme changed to:', newTheme, 'Saved to localStorage');
     });
+}
+
+function updateThemeIcon(theme) {
+    const themeIcon = document.getElementById('themeIcon');
+    if (themeIcon) {
+        themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
+    }
 }
 
 window.addEventListener('scroll', () => {
