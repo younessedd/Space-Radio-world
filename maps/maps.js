@@ -74,14 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        // Prevent page scroll from affecting map zoom
-        mapContainer.addEventListener('wheel', (e) => {
-            if (!isMapActive) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-        }, { passive: false });
-        
         document.querySelectorAll('.location-card').forEach(card => {
             card.addEventListener('click', () => {
                 const index = parseInt(card.dataset.index);
