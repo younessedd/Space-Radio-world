@@ -29,7 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tap: false,
             doubleClickZoom: false,
             boxZoom: false,
-            keyboard: false
+            keyboard: false,
+            zoomControl: true
         }).setView([20, 0], 2);
         
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -43,19 +44,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         // Enable touch interactions only when user clicks on map
+        let isMapActive = false;
+        
         mapContainer.addEventListener('click', (e) => {
-            // Only enable if clicking directly on the map container
+            // Only enable if clicking directly on map container
             if (e.target === mapContainer || mapContainer.contains(e.target)) {
-                map.touchZoom.enable();
-                map.dragging.enable();
-                map.tap.enable();
-                map.doubleClickZoom.enable();
-                map.boxZoom.enable();
-                map.keyboard.enable();
+                if (!isMapActive) {
+                    map.touchZoom.enable();
+                    map.dragging.enable();
+                    map.tap.enable();
+                    map.doubleClickZoom.enable();
+                    map.boxZoom.enable();
+                    map.keyboard.enable();
+                    isMapActive = true;
+                }
             }
         });
         
-        // Disable touch interactions when clicking outside map
+        // Disable interactions when clicking outside map
         document.addEventListener('click', (e) => {
             if (!mapContainer.contains(e.target)) {
                 map.touchZoom.disable();
@@ -64,8 +70,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 map.doubleClickZoom.disable();
                 map.boxZoom.disable();
                 map.keyboard.disable();
+                isMapActive = false;
             }
         });
+        
+        // Prevent page scroll from affecting map zoom
+        mapContainer.addEventListener('wheel', (e) => {
+            if (!isMapActive) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        }, { passive: false });
         
         document.querySelectorAll('.location-card').forEach(card => {
             card.addEventListener('click', () => {
