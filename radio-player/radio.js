@@ -599,6 +599,347 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadStations();
 
+    // ============================================
+    // INFINITE RADIO CAROUSEL SYSTEM
+    // ============================================
+    
+    const RadioCarousel = {
+        // Configuration
+        config: {
+            transitionDuration: 400,
+            swipeThreshold: 50,
+            autoPlayDelay: 5000
+        },
+        
+        // State
+        state: {
+            stations: [],
+            currentIndex: 0,
+            isAnimating: false,
+            touchStartX: 0,
+            touchStartY: 0,
+            touchEndX: 0,
+            touchEndY: 0,
+            containerWidth: 0,
+            cardWidth: 0,
+            gap: 16
+        },
+        
+        // DOM Elements
+        elements: {
+            grid: null,
+            audio: null
+        },
+        
+        // Initialize the carousel
+        init() {
+            this.elements.grid = document.getElementById('stationsGrid');
+            this.elements.audio = document.querySelector('audio');
+            
+            if (!this.elements.grid) return;
+            
+            this.state.stations = Array.from(
+                this.elements.grid.querySelectorAll('.station-card')
+            );
+            
+            if (this.state.stations.length === 0) return;
+            
+            this.calculateDimensions();
+            this.setupEventListeners();
+            this.updateCarouselPosition(false);
+            this.updateActiveStation();
+        },
+        
+        // Calculate card and container dimensions
+        calculateDimensions() {
+            const firstCard = this.state.stations[0];
+            const gridStyle = getComputedStyle(this.elements.grid);
+            
+            this.state.cardWidth = firstCard.offsetWidth;
+            this.state.gap = parseInt(gridStyle.gap) || 16;
+            this.state.containerWidth = this.elements.grid.offsetWidth;
+        },
+        
+        // Setup all event listeners
+        setupEventListeners() {
+            // Touch events for swipe
+            this.elements.grid.addEventListener('touchstart', 
+                this.handleTouchStart.bind(this), 
+                { passive: true }
+            );
+            
+            this.elements.grid.addEventListener('touchmove', 
+                this.handleTouchMove.bind(this), 
+                { passive: true }
+            );
+            
+            this.elements.grid.addEventListener('touchend', 
+                this.handleTouchEnd.bind(this), 
+                { passive: true }
+            );
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', this.handleKeyboard.bind(this));
+            
+            // Click on station card
+            this.elements.grid.addEventListener('click', this.handleCardClick.bind(this));
+            
+            // Window resize
+            window.addEventListener('resize', () => {
+                this.calculateDimensions();
+                this.updateCarouselPosition(false);
+            });
+        },
+        
+        // Handle touch start
+        handleTouchStart(e) {
+            this.state.touchStartX = e.changedTouches[0].screenX;
+            this.state.touchStartY = e.changedTouches[0].screenY;
+        },
+        
+        // Handle touch move
+        handleTouchMove(e) {
+            // Prevent vertical scroll interference
+        },
+        
+        // Handle touch end
+        handleTouchEnd(e) {
+            this.state.touchEndX = e.changedTouches[0].screenX;
+            this.state.touchEndY = e.changedTouches[0].screenY;
+            
+            this.handleSwipe();
+        },
+        
+        // Handle swipe detection
+        handleSwipe() {
+            const deltaX = this.state.touchEndX - this.state.touchStartX;
+            const deltaY = this.state.touchEndY - this.state.touchStartY;
+            
+            // Ignore vertical swipes
+            if (Math.abs(deltaY) > Math.abs(deltaX)) return;
+            
+            if (Math.abs(deltaX) > this.config.swipeThreshold) {
+                if (deltaX > 0) {
+                    this.prevStation();
+                } else {
+                    this.nextStation();
+                }
+            }
+        },
+        
+        // Handle keyboard navigation
+        handleKeyboard(e) {
+            if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                this.nextStation();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                this.prevStation();
+            }
+        },
+        
+        // Handle card click
+        handleCardClick(e) {
+            const card = e.target.closest('.station-card');
+            if (!card) return;
+            
+            const index = this.state.stations.indexOf(card);
+            if (index !== -1 && index !== this.state.currentIndex) {
+                this.goToStation(index);
+            }
+        },
+        
+        // Go to next station
+        nextStation() {
+            this.state.currentIndex = (this.state.currentIndex + 1) % this.state.stations.length;
+            this.updateCarouselPosition(true);
+            this.updateActiveStation();
+        },
+        
+        // Go to previous station
+        prevStation() {
+            this.state.currentIndex = (this.state.currentIndex - 1 + this.state.stations.length) % this.state.stations.length;
+            this.updateCarouselPosition(true);
+            this.updateActiveStation();
+        },
+        
+        // Go to specific station
+        goToStation(index) {
+            if (this.state.isAnimating) return;
+            
+            this.state.currentIndex = index;
+            this.updateCarouselPosition(true);
+            this.updateActiveStation();
+        },
+        
+        // Update carousel position with smooth animation
+        updateCarouselPosition(animate = true) {
+            const { currentIndex, cardWidth, gap } = this.state;
+            const scrollPosition = currentIndex * (cardWidth + gap);
+            
+            this.elements.grid.style.scrollBehavior = animate ? 'smooth' : 'auto';
+            this.elements.grid.scrollLeft = scrollPosition;
+            
+            // Handle animation state
+            if (animate) {
+                this.state.isAnimating = true;
+                setTimeout(() => {
+                    this.state.isAnimating = false;
+                }, this.config.transitionDuration);
+            }
+        },
+        
+        // Update active station
+        updateActiveStation() {
+            // Remove active class from all stations
+            this.state.stations.forEach(station => {
+                station.classList.remove('active-station');
+            });
+            
+            // Add active class to current station
+            const currentStation = this.state.stations[this.state.currentIndex];
+            if (currentStation) {
+                currentStation.classList.add('active-station');
+                this.playStation(currentStation);
+            }
+        },
+        
+        // Play station
+        playStation(station) {
+            const url = station.dataset.url;
+            const name = station.dataset.name;
+            const country = station.dataset.country || '';
+            const city = station.dataset.city || '';
+            
+            if (!url || !this.elements.audio) return;
+            
+            // Load and play
+            this.elements.audio.src = url;
+            this.elements.audio.play().catch(err => {
+                console.log('Auto-play prevented:', err.message);
+            });
+            
+            // Update UI
+            this.updatePlayerUI(name, country, city, station);
+        },
+        
+        // Update player UI
+        updatePlayerUI(name, country, city, station) {
+            const playerBar = document.getElementById('playerBar');
+            const nowPlayingName = document.getElementById('nowPlayingName');
+            const currentLogo = document.getElementById('currentLogo');
+            
+            if (playerBar) playerBar.classList.add('active');
+            if (nowPlayingName) {
+                nowPlayingName.textContent = name;
+            }
+            
+            // Update logo
+            if (currentLogo) {
+                const logoContainer = station.querySelector('.station-logo-container');
+                if (logoContainer) {
+                    const img = logoContainer.querySelector('img');
+                    if (img && img.src) {
+                        currentLogo.innerHTML = `<img src="${img.src}" alt="${name}">`;
+                    } else {
+                        currentLogo.innerHTML = '<span>📻</span>';
+                    }
+                }
+            }
+        }
+    };
+    
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+        // Wait for stations to be loaded
+        setTimeout(() => {
+            RadioCarousel.init();
+            // Add scroll listener to detect centered card
+            setTimeout(() => setupCenterDetection(), 600);
+        }, 500);
+    });
+    
+    // Also try to init after loadStations completes
+    const originalLoadStations = loadStations;
+    loadStations = async function() {
+        await originalLoadStations.apply(this, arguments);
+        // Small delay to ensure DOM is updated
+        setTimeout(() => {
+            RadioCarousel.init();
+            setTimeout(() => setupCenterDetection(), 600);
+        }, 100);
+    };
+    
+    // Detect which card is centered in viewport
+    function setupCenterDetection() {
+        const grid = document.getElementById('stationsGrid');
+        if (!grid) return;
+        
+        const cards = grid.querySelectorAll('.station-card');
+        if (cards.length === 0) return;
+        
+        const cardWidth = cards[0].offsetWidth || 284;
+        const gap = 16;
+        
+        function updateCenterCard() {
+            const scrollLeft = grid.scrollLeft;
+            const viewportCenter = grid.offsetWidth / 2;
+            const scrollCenter = scrollLeft + viewportCenter;
+            
+            // Find card closest to center
+            let closestIndex = 0;
+            let closestDistance = Infinity;
+            
+            cards.forEach((card, index) => {
+                const cardCenter = card.offsetLeft + (cardWidth / 2);
+                const distance = Math.abs(cardCenter - scrollCenter);
+                
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestIndex = index;
+                }
+            });
+            
+            // Update active class
+            cards.forEach((card, i) => {
+                if (i === closestIndex) {
+                    card.classList.add('active-station');
+                    // Play station
+                    const url = card.dataset.url;
+                    const name = card.dataset.name;
+                    const audio = document.querySelector('audio');
+                    if (url && audio && audio.src !== url) {
+                        audio.src = url;
+                        audio.play().catch(() => {});
+                        
+                        const playerBar = document.getElementById('playerBar');
+                        const nowPlayingName = document.getElementById('nowPlayingName');
+                        const currentLogo = document.getElementById('currentLogo');
+                        
+                        if (playerBar) playerBar.classList.add('active');
+                        if (nowPlayingName) nowPlayingName.textContent = name;
+                        if (currentLogo) {
+                            const img = card.querySelector('.station-logo-container img');
+                            currentLogo.innerHTML = img && img.src ? `<img src="${img.src}" alt="${name}">` : '<span>📻</span>';
+                        }
+                    }
+                } else {
+                    card.classList.remove('active-station');
+                }
+            });
+        }
+        
+        // Listen to scroll events
+        let scrollTimeout;
+        grid.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(updateCenterCard, 100);
+        });
+        
+        // Initial detection
+        updateCenterCard();
+    }
+
     // Touch swipe for horizontal scrolling
     stationsGrid.addEventListener('touchstart', (e) => {
         touchStartX = e.changedTouches[0].screenX;
