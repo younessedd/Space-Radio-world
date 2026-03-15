@@ -4,7 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Radio - Your Gateway to Infinite Soundscapes</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <meta name="description" content="Space Radio - Stream live radio stations from around the world. Over 150 stations playing pop, rock, jazz, classical, electronic, news and more. Listen free 24/7.">
+    <meta name="keywords" content="radio, streaming, live radio, internet radio, music, stations, pop, rock, jazz, classical, electronic, news">
+    <meta name="author" content="Space Radio">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="Space Radio - Your Gateway to Infinite Soundscapes">
+    <meta property="og:description" content="Stream live radio from across the universe. Over 150 stations worldwide.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://space-radio-plum.vercel.app">
+    <meta property="og:image" content="https://space-radio-plum.vercel.app/images/hero-dark.png">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Space Radio - Your Gateway to Infinite Soundscapes">
+    <meta name="twitter:description" content="Stream live radio from across the universe.">
+    
+    <!-- Canonical -->
+    <link rel="canonical" href="https://space-radio-plum.vercel.app">
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" as="style">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📻</text></svg>">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <link rel="stylesheet" href="assets/css/scroll-animations.css">
     <style>
@@ -974,40 +1003,30 @@
         }
     </style>
 
-    <script src="components/components.js"></script>
-    <script src="hero/hero.js"></script>
-    <script src="radio-player/radio.js"></script>
-    <script src="weather/weather.js"></script>
-    <script src="radio-shows/shows.js"></script>
-    <script src="schedule/schedule.js"></script>
-    <script src="featured-music/featured.js"></script>
-    <script src="maps/maps.js"></script>
-    <script src="reviews/reviews.js"></script>
-    <script src="stats/stats.js"></script>
-    <script src="contact/contact.js"></script>
-    <script src="footer/footer.js"></script>
+    <script src="components/components.js" defer></script>
+    <script src="hero/hero.js" defer></script>
+    <script src="radio-player/radio.js" defer></script>
+    <script src="weather/weather.js" defer></script>
+    <script src="radio-shows/shows.js" defer></script>
+    <script src="schedule/schedule.js" defer></script>
+    <script src="featured-music/featured.js" defer></script>
+    <script src="maps/maps.js" defer></script>
+    <script src="reviews/reviews.js" defer></script>
+    <script src="stats/stats.js" defer></script>
+    <script src="contact/contact.js" defer></script>
+    <script src="footer/footer.js" defer></script>
 
     <script>
         function toggleMobileMenu() {
-            console.log('Toggle function called');
             const burgerBtn = document.getElementById('mobileMenuBtn');
             const navLinks = document.querySelector('.nav-links');
-            
-            console.log('Burger button:', burgerBtn);
-            console.log('Nav links:', navLinks);
             
             if (burgerBtn && navLinks) {
                 burgerBtn.classList.toggle('active');
                 navLinks.classList.toggle('active');
-                
-                console.log('Classes after toggle:');
-                console.log('Burger classes:', burgerBtn.className);
-                console.log('Nav classes:', navLinks.className);
-            } else {
-                console.error('Elements not found!');
             }
         }
     </script>
-    <script src="assets/js/scroll-animations.js"></script>
+    <script src="assets/js/scroll-animations.js" defer></script>
 </body>
 </html>
