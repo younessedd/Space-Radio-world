@@ -338,12 +338,13 @@ document.addEventListener('DOMContentLoaded', () => {
         forecastGrid.innerHTML = dailyData.map(day => {
             const date = new Date(day.dt * 1000);
             const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+            const dateNum = date.getDate();
             const icon = weatherIcons[day.weather[0].icon] || '🌤️';
             const temp = Math.round(day.main.temp);
 
             return `
                 <div class="forecast-card">
-                    <div class="forecast-day">${dayName}</div>
+                    <div class="forecast-day">${dayName}, ${dateNum}</div>
                     <div class="forecast-icon">${icon}</div>
                     <div class="forecast-temp">${temp}°</div>
                 </div>
@@ -430,23 +431,69 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Load weather on page load - try location first
+    // Load weather on page load - load default immediately, then update with user location when granted
     function initWeather() {
+        // Load default weather immediately
+        loadWeather('London');
+        
+        let lastLat = null;
+        let lastLon = null;
+        
+        // Function to load weather from coordinates
+        const loadFromLocation = (position) => {
+            const { latitude, longitude } = position.coords;
+            if (lastLat !== latitude || lastLon !== longitude) {
+                lastLat = latitude;
+                lastLon = longitude;
+                loadWeatherByCoords(latitude, longitude);
+            }
+        };
+        
+        // Try to get user location
         if (navigator.geolocation) {
-            weatherContent.innerHTML = '<div class="loading-spinner"></div>';
+            // Try immediately
+            navigator.geolocation.getCurrentPosition(loadFromLocation, () => {}, { timeout: 5000 });
             
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const { latitude, longitude } = position.coords;
-                    loadWeatherByCoords(latitude, longitude);
-                },
-                () => {
-                    loadWeather('London');
-                }
-            );
-        } else {
-            loadWeather('London');
+            // Watch for location changes continuously
+            navigator.geolocation.watchPosition(loadFromLocation, () => {}, { 
+                enableHighAccuracy: false, 
+                maximumAge: 30000 
+            });
+            
+            // Poll continuously every 2 seconds to catch permission changes
+            setInterval(() => {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        if (lastLat !== latitude || lastLon !== longitude) {
+                            lastLat = latitude;
+                            lastLon = longitude;
+                            loadWeatherByCoords(latitude, longitude);
+                        }
+                    },
+                    () => {},
+                    { timeout: 2000 }
+                );
+            }, 2000);
         }
+        
+        // Also listen for visibility change to refresh when user returns to tab after granting permission
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        if (lastLat !== latitude || lastLon !== longitude) {
+                            lastLat = latitude;
+                            lastLon = longitude;
+                            loadWeatherByCoords(latitude, longitude);
+                        }
+                    },
+                    () => {},
+                    { timeout: 3000 }
+                );
+            }
+        });
     }
     
     // Load weather by coordinates directly using OpenWeatherMap
@@ -465,6 +512,11 @@ document.addEventListener('DOMContentLoaded', () => {
             renderCurrentWeather(currentData);
             renderForecast(forecastData);
             window.currentCity = currentData.name;
+            
+            // Show notification that weather was updated with user location
+            if (window.showToastNotification) {
+                showToastNotification(`Weather updated for ${currentData.name}`, 'success');
+            }
         } else {
             loadWeather('London');
         }

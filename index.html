@@ -132,6 +132,16 @@
                         btn.removeAttribute('data-open');
                     });
                 });
+                
+                // Nav logo click - scroll to hero and close mobile menu
+                document.querySelector('.nav-logo').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var nav = document.querySelector('.nav-links');
+                    var btn = document.getElementById('mobileMenuBtn');
+                    nav.removeAttribute('data-visible');
+                    btn.removeAttribute('data-open');
+                    document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
+                });
             </script>
         </div>
     </nav>
@@ -147,7 +157,7 @@
                 <p class="hero-subtitle">Your gateway to infinite soundscapes. Stream live radio from across the universe.</p>
                 <div class="hero-actions">
                     <button class="btn-primary" id="listenLiveBtn">
-                        <span class="btn-icon">🎧</span>
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         Listen Live
                     </button>
                 </div>

@@ -21,7 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const mapContainer = document.getElementById('map');
     if (mapContainer && typeof L !== 'undefined') {
-        map = L.map('map', { scrollWheelZoom: false }).setView([20, 0], 2);
+        // Initialize map with touch interactions disabled
+        map = L.map('map', { 
+            scrollWheelZoom: false,
+            touchZoom: false,
+            dragging: false,
+            tap: false,
+            doubleClickZoom: false,
+            boxZoom: false,
+            keyboard: false
+        }).setView([20, 0], 2);
         
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
@@ -31,6 +40,31 @@ document.addEventListener('DOMContentLoaded', () => {
             L.marker([loc.lat, loc.lng])
                 .addTo(map)
                 .bindPopup(`<b>${loc.emoji} ${loc.city}</b><br>${loc.address}`);
+        });
+        
+        // Enable touch interactions only when user clicks on map
+        mapContainer.addEventListener('click', (e) => {
+            // Only enable if clicking directly on the map container
+            if (e.target === mapContainer || mapContainer.contains(e.target)) {
+                map.touchZoom.enable();
+                map.dragging.enable();
+                map.tap.enable();
+                map.doubleClickZoom.enable();
+                map.boxZoom.enable();
+                map.keyboard.enable();
+            }
+        });
+        
+        // Disable touch interactions when clicking outside map
+        document.addEventListener('click', (e) => {
+            if (!mapContainer.contains(e.target)) {
+                map.touchZoom.disable();
+                map.dragging.disable();
+                map.tap.disable();
+                map.doubleClickZoom.disable();
+                map.boxZoom.disable();
+                map.keyboard.disable();
+            }
         });
         
         document.querySelectorAll('.location-card').forEach(card => {
