@@ -721,6 +721,29 @@ body.light-mode .station-card.playing .station-logo-container {
     gap: 1rem;
 }
 
+.loading-indicator {
+    display: none;
+    width: 24px;
+    height: 24px;
+}
+
+.loading-indicator.active {
+    display: block;
+}
+
+.loading-spinner-small {
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(0, 245, 255, 0.2);
+    border-top-color: var(--neon-cyan);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 .control-btn {
     width: 50px;
     height: 50px;
@@ -731,12 +754,55 @@ body.light-mode .station-card.playing .station-logo-container {
     align-items: center;
     justify-content: center;
     font-size: 1.25rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.button-spinner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.button-spinner.active {
+    opacity: 1;
+}
+
+.control-btn.play-btn.playing .button-spinner {
+    opacity: 0;
+}
+
+.control-btn.play-btn.loading .play-icon {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.control-btn.play-btn.loading .button-spinner {
+    opacity: 1;
+}
+
+.control-btn {
     transition: all 0.3s ease;
 }
 
 .play-btn {
     background: linear-gradient(135deg, var(--neon-cyan), var(--nebula-blue));
-    color: var(--space-black);
+    color: black;
+}
+
+.play-btn .play-icon {
+    color: black;
+}
+
+.button-spinner {
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-top-color: black;
 }
 
 .play-btn:hover {

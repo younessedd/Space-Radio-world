@@ -133,14 +133,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     requestAnimationFrame(animate);
     
-    enterBtn.addEventListener('click', () => {
+    // Auto-redirect when loading completes (after 3 seconds = 100%)
+    setTimeout(() => {
+        sessionStorage.setItem('splashShown', 'true');
         splashScreen.classList.add('hidden');
         setTimeout(() => {
             window.location.href = '../index.html';
         }, 800);
-    });
-    
-    setTimeout(() => {
-        enterBtn.style.pointerEvents = 'auto';
     }, 3000);
 });

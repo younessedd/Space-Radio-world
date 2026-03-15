@@ -464,25 +464,60 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!currentStationData) return;
 
         const playIcon = playPauseBtn.querySelector('.play-icon');
-        playIcon.style.opacity = '0.5';
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const buttonSpinner = document.getElementById('buttonSpinner');
         
         if (isPlaying) {
             audioPlayer.pause();
             isPlaying = false;
             audioVisualizer.classList.remove('playing');
+            playPauseBtn.classList.remove('playing', 'loading');
             playIcon.textContent = '▶';
+            playIcon.style.opacity = '1';
+            loadingIndicator.classList.remove('active');
         } else {
+            playIcon.style.opacity = '0';
+            loadingIndicator.classList.add('active');
+            playPauseBtn.classList.add('loading');
+            playPauseBtn.classList.remove('playing');
+            
             audioPlayer.play().then(() => {
                 isPlaying = true;
                 audioVisualizer.classList.add('playing');
                 playIcon.textContent = '⏸';
+                playIcon.style.opacity = '1';
+                loadingIndicator.classList.remove('active');
+                playPauseBtn.classList.remove('loading');
+                playPauseBtn.classList.add('playing');
             }).catch(error => {
                 console.error('Error playing:', error);
                 showToastNotification('Unable to play station', 'error');
+                playIcon.style.opacity = '1';
+                loadingIndicator.classList.remove('active');
+                playPauseBtn.classList.remove('loading');
             });
         }
-        
-        setTimeout(() => playIcon.style.opacity = '1', 100);
+    });
+
+    // Show loading indicator during buffering
+    audioPlayer.addEventListener('waiting', () => {
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const buttonSpinner = document.getElementById('buttonSpinner');
+        playPauseBtn.classList.add('loading');
+        playPauseBtn.classList.remove('playing');
+    });
+
+    audioPlayer.addEventListener('playing', () => {
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const buttonSpinner = document.getElementById('buttonSpinner');
+        playPauseBtn.classList.remove('loading');
+        playPauseBtn.classList.add('playing');
+    });
+
+    audioPlayer.addEventListener('error', () => {
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const buttonSpinner = document.getElementById('buttonSpinner');
+        playPauseBtn.classList.remove('loading');
     });
 
     volumeSlider.addEventListener('input', (e) => {

@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Radio - Your Gateway to Infinite Soundscapes</title>
+    <script>
+        // Check if user already visited splash screen
+        if (!sessionStorage.getItem('splashShown')) {
+            window.location.href = 'splash/splash.html';
+        }
+    </script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
@@ -389,8 +395,12 @@
                     </div>
                     
                     <div class="player-controls">
+                        <div class="loading-indicator" id="loadingIndicator">
+                            <div class="loading-spinner-small"></div>
+                        </div>
                         <button class="control-btn play-btn" id="playPauseBtn">
                             <span class="play-icon">▶</span>
+                            <div class="button-spinner" id="buttonSpinner"></div>
                         </button>
                     </div>
                     
