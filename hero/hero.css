@@ -424,21 +424,6 @@ body.light-mode .hero {
         font-size: 0.6rem;
     }
     
-    .scroll-indicator {
-        font-size: 0.55rem;
-        bottom: 1rem;
-    }
-    
-    .scroll-arrow {
-        width: 16px;
-        height: 24px;
-    }
-    
-    .scroll-arrow::before {
-        width: 3px;
-        height: 6px;
-        top: 4px;
-    }
 }
 
 @media (max-width: 320px) {
