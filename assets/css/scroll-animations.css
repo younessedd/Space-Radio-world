@@ -1,0 +1,239 @@
+/* ================================================
+   Scroll Animation System - Modern SaaS Style
+   Apple/Stripe/Tesla inspired animations
+   ================================================ */
+
+/* Base animation classes - modern smooth easing */
+.fade-in,
+.slide-left,
+.slide-right,
+.slide-up,
+.slide-down,
+.scale-in,
+.rotate-on-scroll,
+.magnetic,
+.blur-in,
+.reveal-up {
+    opacity: 0;
+    will-change: transform, opacity, filter;
+    transition-property: transform, opacity, filter;
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition-duration: 0.6s;
+}
+
+/* ================================================
+   1. Fade In On Scroll - Modern subtle fade
+   ================================================ */
+.fade-in {
+    transform: translateY(30px);
+}
+
+.fade-in.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ================================================
+   2. Slide In Animations - Smooth entrance
+   ================================================ */
+.slide-left {
+    transform: translateX(-50px);
+}
+
+.slide-left.animated {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.slide-right {
+    transform: translateX(50px);
+}
+
+.slide-right.animated {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.slide-up {
+    transform: translateY(50px);
+}
+
+.slide-up.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.slide-down {
+    transform: translateY(-50px);
+}
+
+.slide-down.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ================================================
+   3. Scale Animation - Soft elegant zoom
+   ================================================ */
+.scale-in {
+    transform: scale(0.92);
+}
+
+.scale-in.animated {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ================================================
+   4. Scroll Rotation - Subtle tilt on scroll
+   ================================================ */
+.rotate-on-scroll {
+    transform: rotate(0deg) scale(1);
+}
+
+.rotate-on-scroll.animated {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+/* ================================================
+   5. Blur In Animation - Cinematic reveal
+   ================================================ */
+.blur-in {
+    transform: scale(1.01);
+    filter: blur(8px);
+}
+
+.blur-in.animated {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+}
+
+/* ================================================
+   6. Reveal Up - Elegant text reveal
+   ================================================ */
+.reveal-up {
+    transform: translateY(25px);
+}
+
+.reveal-up.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ================================================
+   7. Parallax Container
+   ================================================ */
+.parallax {
+    position: relative;
+    overflow: hidden;
+}
+
+.parallax-bg {
+    position: absolute;
+    top: -20%;
+    left: 0;
+    right: 0;
+    bottom: -20%;
+    background-size: cover;
+    background-position: center;
+    will-change: transform;
+    pointer-events: none;
+}
+
+/* ================================================
+   8. Magnetic/Elastic Effect - Subtle cursor follow
+   ================================================ */
+.magnetic {
+    transform: scale(1);
+    transition: transform 0.12s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.magnetic.animated {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ================================================
+   9. Stagger Animation Container
+   ================================================ */
+.stagger-container {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.stagger-container.animated {
+    opacity: 1;
+}
+
+.stagger-item {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.stagger-item.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.stagger-item:nth-child(1) { transition-delay: 0.05s; }
+.stagger-item:nth-child(2) { transition-delay: 0.1s; }
+.stagger-item:nth-child(3) { transition-delay: 0.15s; }
+.stagger-item:nth-child(4) { transition-delay: 0.2s; }
+.stagger-item:nth-child(5) { transition-delay: 0.25s; }
+.stagger-item:nth-child(6) { transition-delay: 0.3s; }
+.stagger-item:nth-child(7) { transition-delay: 0.35s; }
+.stagger-item:nth-child(8) { transition-delay: 0.4s; }
+
+/* ================================================
+   Animation Duration Variants
+   ================================================ */
+.fade-in.slow,
+.slide-left.slow,
+.slide-right.slow,
+.slide-up.slow,
+.slide-down.slow,
+.scale-in.slow,
+.blur-in.slow {
+    transition-duration: 0.9s;
+}
+
+.fade-in.fast,
+.slide-left.fast,
+.slide-right.fast,
+.slide-up.fast,
+.slide-down.fast,
+.scale-in.fast,
+.blur-in.fast {
+    transition-duration: 0.35s;
+}
+
+/* ================================================
+   Responsive Adjustments
+   ================================================ */
+@media (max-width: 768px) {
+    .slide-left { transform: translateX(-30px); }
+    .slide-right { transform: translateX(30px); }
+    .slide-up { transform: translateY(30px); }
+    .slide-down { transform: translateY(-30px); }
+    .fade-in { transform: translateY(20px); }
+    .scale-in { transform: scale(0.94); }
+    .blur-in { transform: scale(1.01); }
+    .reveal-up { transform: translateY(20px); }
+}
+
+/* ================================================
+   Reduced Motion Accessibility
+   ================================================ */
+@media (prefers-reduced-motion: reduce) {
+    .fade-in, .slide-left, .slide-right, .slide-up, .slide-down,
+    .scale-in, .rotate-on-scroll, .stagger-item, .stagger-container,
+    .magnetic, .parallax-bg, .blur-in, .reveal-up {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        transition: none !important;
+    }
+}
