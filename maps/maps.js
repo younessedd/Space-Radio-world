@@ -79,6 +79,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const index = parseInt(card.dataset.index);
                 const loc = locations[index];
                 map.setView([loc.lat, loc.lng], 12);
+                
+                // Smooth scroll to top of locations section
+                const locationsSection = document.querySelector('.locations-section');
+                if (locationsSection) {
+                    locationsSection.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             });
         });
     } else if (mapContainer) {
